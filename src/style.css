@@ -1,0 +1,241 @@
+:root {
+  --bg: #1b1d1a;
+  --panel: rgba(27, 29, 26, 0.72);
+  --olive: #8a9a5b;
+  --sand: #c9b98a;
+  --amber: #ffb000;
+  --mono: ui-monospace, 'SF Mono', Menlo, Consolas, 'Courier New', monospace;
+  --top: env(safe-area-inset-top, 0px);
+  --bot: env(safe-area-inset-bottom, 0px);
+  --left: env(safe-area-inset-left, 0px);
+  --right: env(safe-area-inset-right, 0px);
+}
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  -webkit-user-select: none;
+}
+html,
+body {
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+  background: radial-gradient(ellipse at 50% 30%, #2c312a, #121411);
+  color: var(--sand);
+  font:
+    15px/1.4 system-ui,
+    -apple-system,
+    sans-serif;
+  touch-action: none;
+}
+#cam,
+#gl {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+#cam {
+  opacity: 0;
+}
+#cam.on {
+  opacity: 1;
+}
+#hud {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  font-family: var(--mono);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 12px;
+}
+#hud.hidden {
+  display: none;
+}
+.br {
+  position: absolute;
+  width: 26px;
+  height: 26px;
+  border: 0 solid var(--sand);
+  opacity: 0.8;
+}
+.tl {
+  top: calc(48px + var(--top));
+  left: calc(12px + var(--left));
+  border-width: 2px 0 0 2px;
+}
+.tr {
+  top: calc(48px + var(--top));
+  right: calc(12px + var(--right));
+  border-width: 2px 2px 0 0;
+}
+.bl {
+  bottom: calc(12px + var(--bot));
+  left: calc(12px + var(--left));
+  border-width: 0 0 2px 2px;
+}
+.bb {
+  bottom: calc(12px + var(--bot));
+  right: calc(12px + var(--right));
+  border-width: 0 2px 2px 0;
+}
+#compass {
+  position: absolute;
+  top: var(--top);
+  left: calc(16px + var(--left));
+  right: calc(16px + var(--right));
+  width: calc(100% - 32px - var(--left) - var(--right));
+  height: 34px;
+}
+#reticle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 64px;
+  height: 64px;
+  margin: -32px 0 0 -32px;
+  border: 2px solid var(--sand);
+  border-radius: 50%;
+  opacity: 0.85;
+  transition:
+    transform 0.12s,
+    border-color 0.12s;
+}
+#reticle b {
+  position: absolute;
+  inset: 50% auto auto 50%;
+  width: 4px;
+  height: 4px;
+  margin: -2px;
+  background: var(--sand);
+  border-radius: 50%;
+}
+#reticle.lock {
+  transform: scale(0.62);
+  border-color: var(--olive);
+}
+#stats {
+  position: absolute;
+  left: calc(20px + var(--left));
+  top: calc(56px + var(--top));
+  width: 180px;
+  padding: 8px 10px;
+  background: var(--panel);
+  border-left: 3px solid var(--olive);
+}
+.row {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+}
+.row.big {
+  font-size: 15px;
+  margin-top: 6px;
+  color: #e6dcc0;
+}
+#bar {
+  height: 6px;
+  margin: 4px 0;
+  background: #3a3e35;
+}
+#fill {
+  height: 100%;
+  width: 100%;
+  background: var(--olive);
+  transition: width 0.2s;
+}
+#hud.low #fill,
+#hud.low #integ {
+  background: var(--amber);
+  color: var(--amber);
+}
+#radar {
+  position: absolute;
+  right: calc(20px + var(--right));
+  bottom: calc(20px + var(--bot));
+  width: 100px;
+  height: 100px;
+}
+#chatter {
+  position: absolute;
+  left: 50%;
+  bottom: calc(24px + var(--bot));
+  transform: translateX(-50%);
+  max-width: 60%;
+  padding: 6px 10px;
+  background: var(--panel);
+  text-align: center;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+#chatter.on {
+  opacity: 1;
+}
+#vignette {
+  position: absolute;
+  inset: 0;
+  box-shadow: inset 0 0 90px 10px var(--amber);
+  opacity: 0;
+}
+#vignette.hit {
+  animation: flash 0.45s ease-out;
+}
+@keyframes flash {
+  from {
+    opacity: 0.8;
+  }
+  to {
+    opacity: 0;
+  }
+}
+#menu {
+  position: fixed;
+  inset: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: calc(16px + var(--top)) calc(16px + var(--right)) calc(16px + var(--bot))
+    calc(16px + var(--left));
+  background: rgba(18, 20, 17, 0.78);
+}
+#menu.on {
+  display: flex;
+}
+.card {
+  width: min(420px, 100%);
+  padding: 22px 20px;
+  background: var(--bg);
+  border: 1px solid var(--olive);
+  border-top: 4px solid var(--olive);
+}
+.card h1 {
+  margin: 0 0 12px;
+  font: 700 22px var(--mono);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #e6dcc0;
+}
+.card p {
+  margin: 8px 0;
+}
+.card .warn {
+  color: var(--amber);
+}
+button {
+  width: 100%;
+  min-height: 56px;
+  margin-top: 16px;
+  font: 700 16px var(--mono);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--bg);
+  background: var(--sand);
+  border: 0;
+  border-radius: 2px;
+}
+button:active {
+  background: var(--olive);
+}

@@ -1,0 +1,10 @@
+{
+  "name": "Sky Defender",
+  "short_name": "Sky Defender",
+  "start_url": "/",
+  "display": "fullscreen",
+  "orientation": "any",
+  "background_color": "#1b1d1a",
+  "theme_color": "#1b1d1a",
+  "icons": [{ "src": "/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }]
+}
